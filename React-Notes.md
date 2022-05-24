@@ -44,4 +44,35 @@ render() {
 
 ## Loading CSS into React App
 
--
+- Options for CSS
+- Existing CSS, you can drop CSS into the mounting point, index.html
+- Inline CSS, import the CSS that only relates to that component. Import and couple CSS with what gets rendered out
+- Simple way, just `import "./css/style.css"`, into your `index.html` file
+- The `create react app` will recognize that is not a JS file, and load in and stick into a style tag and automatically hot load it for us.
+- You can just write vanilla CSS in the main directory of your app. And just import.
+
+## Creating our app layout with components
+
+- Create an `app` component, allow us to share data and update across the app. And methods.
+- Make a new file, `App.js`
+- import react into the file `import React from "react";`
+- Create a class
+- And it's good practice to `export default App;` before you forget.
+- Inside, create your render method `render(){}`, and then add the `return()` with parenthesis.
+
+```JAVA
+// App.js
+import React from 'react';
+
+class App extends React.component {
+  return (
+    <div className="catch-of-the-day">
+      <p>heyyy</p>
+    </div>
+  )
+}
+
+export default App;
+```
+
+- Then go back to your index.js file, import `App` and set it in the render method.
