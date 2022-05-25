@@ -45,7 +45,7 @@ render() {
 ## Loading CSS into React App
 
 - Options for CSS
-- Existing CSS, you can drop CSS into the mounting point, index.html
+- Existing CSS, you can drop CSS into the mounting point, `index.html` `<link>`
 - Inline CSS, import the CSS that only relates to that component. Import and couple CSS with what gets rendered out
 - Simple way, just `import "./css/style.css"`, into your `index.html` file
 - The `create react app` will recognize that is not a JS file, and load in and stick into a style tag and automatically hot load it for us.
@@ -76,3 +76,40 @@ export default App;
 ```
 
 - Then go back to your index.js file, import `App` and set it in the render method.
+- Start to scaffold out your components based on your design.
+
+```JAVASCRIPT
+class App extends React.component {
+  return (
+    <div className="catch-of-the-day">
+      <div className="menu">
+        <Header />
+      </div>
+      <Inventory />
+      <Order />
+    </div>
+  )
+}
+```
+
+- So start to make a new `<Header />`, `<Inventory />`, and `<Order />` components.
+- Make new file for each inside your component folder.
+- Don't forget to `import` React
+- And also `export default YourComponent;` so you can use in other components
+
+```JAVASCRIPT
+import React, { Component } from 'react';
+
+class Header extends React.Component {
+    render() {
+        return (
+            <p>Hello!</p>
+        )
+    }
+}
+
+export default Header;
+```
+
+- Then to see the component, `import` into the file it's going to be used.
+- `import Header from './Header';`, if in the same directory, use the `./` so React knows where to grab it.
