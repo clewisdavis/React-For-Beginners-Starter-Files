@@ -79,7 +79,7 @@ export default App;
 - Start to scaffold out your components based on your design.
 
 ```JAVASCRIPT
-class App extends React.component {
+class App extends React.Component {
   return (
     <div className="catch-of-the-day">
       <div className="menu">
@@ -113,3 +113,22 @@ export default Header;
 
 - Then to see the component, `import` into the file it's going to be used.
 - `import Header from './Header';`, if in the same directory, use the `./` so React knows where to grab it.
+- Create the other components, `<Inventory />` and `<Order />`.
+- Create a new file within your components directory.
+- TIP: You can just save as, an existing component, and just update the elements in the `return`, class name and export.
+- This scaffled out the basic layout of the applications
+
+## Passing Dynamic Data with Props
+
+- Props and state are two fundamental concepts.
+- Props, similar to HTML tags, the `<img>` tag for example.
+- The `<img>` tag has attributes, `src` and `alt`, without those two things, the tag has no idea how to render.
+- Same thing with `<input>`, you have to give it a `type` so it knows what to render. It needs to know what type of input before rendering to the page.
+- In HTML, these are called *attributes*
+- In React, these are called *props*
+- PROPS ARE A WAY WE GET DATA INTO A COMPONENT
+- PROPS VS. STATE
+- State is where the data lives, it is the data's home
+- Props, is how it gets to where it needs to go
+
+- Props, you just make them up. Can be named anything, so long as not conflict with existing props.
