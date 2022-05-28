@@ -131,4 +131,30 @@ export default Header;
 - State is where the data lives, it is the data's home
 - Props, is how it gets to where it needs to go
 
+### Define the prop
+
 - Props, you just make them up. Can be named anything, so long as not conflict with existing props.
+- When you want to make something dynamic, pass it in from database etc.
+- There are no pre-set `props` you are supposed to use, you just make them up
+- `<Header tagline="Chris is Cool!" />`
+- An object of data that got passed in. You can pass in any type.
+- If you want to pass in anything other then a string, you have to use `{}`
+- `<Header tagline="Chris is Cool!" age={500} cool={true} />`
+
+### Using in Component
+
+- When you want to use a viable inside of JSX, give a set of `{}`, says we are just going to go back to JS for a sec.
+- to set in you element, `{this.props.tagline}`
+- *this*, is the component instance, whatever was passed in, you can have multiple instances with differ data in the prop.
+- *props*, is the object inside our component
+- This is very similar to template in JS.
+
+- TIP: In the console, use `$r` to get the component instance you are looking at.
+- AHA MOMENT! This whole component thing, is just an `object`. Like the prototype chain in JS.
+- `$r` to find the object, and look at what's available to use.
+
+- Warning, create React app does run eslint, so it will throw some warnings to help you clean things up.
+
+## Stateless Functional Components
+
+-
