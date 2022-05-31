@@ -4,6 +4,10 @@ import Order from './Order';
 import Inventory from './Inventory';
 
 class App extends React.Component {
+  handleClick = () => {
+    console.log('hello there');
+  }
+
   render() {
       return (
         <div className="catch-of-the-day">

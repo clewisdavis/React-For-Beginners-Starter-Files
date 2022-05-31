@@ -157,4 +157,64 @@ export default Header;
 
 ## Stateless Functional Components
 
--
+- Some component do not do anything. It's simply a render function that just renders HTML.
+- If you component ONLY has a render method, and a prop type, then you can convert it to an *stateless functional component*
+
+- As vanilla JS, function
+- When you have a function, there is no `this`. You only need `props.tagline`
+
+```JAVASCRIPT
+function Header(props) {
+  return(
+    <div>
+      <p>Some regular ole HTML here, {props.tagline}</p>
+    </div>
+  )
+}
+```
+
+- A step further, as an arrow function with implicit return (remove `return()` and `{}`)
+
+```JAVASCRIPT
+CONST Header = (props) => (
+    <div>
+      <p>Some regular ole HTML here, {props.tagline}</p>
+    </div>
+)
+```
+
+- If it just a component that you need to pass in some data via `props` and returns some JSX . Most likely a **Stateless Functional Component**
+
+## Routing with React Router
+
+- React Router, not baked in to React, defer to external component.
+- React Router, and Next.js
+- Everything in React is a component. Even the Router.
+- First thing, create a file in your components dir. `Router.js`
+- Then import
+
+```JAVASCRIPT
+import React from 'react';
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import StorePicker from './StorePicker';
+
+const Router = () => (
+  <BrowserRouter>
+    <Switch>
+      <Route exact path="/" component={StorePicker} />
+    </Switch>
+  </BrowserRouter>
+)
+
+export default Router;
+```
+
+- The way the `<Switch>` tag works, it's going to look for that one, then keep trying until it finds a not found
+- `<Route>` will take `props`, fist one is `exact` on the home page `./`, then the other ones will be your site pages, then the third route is a catch all.
+- Then tell it exactly which component to render out.
+- `<Route exact path="/" component={StorePicker} />`, will render out the `<StorePicker />` component when you go to the `path="/"`
+- Make sure you `import` the component into your file.
+
+- Render the `<Router />` to the mounting point. Typically `index.js` file.
+- `render(<Router />, document.querySelector('#main'));`.
+- Make sure to `import Router from './components/Router';` and remove any unused.
