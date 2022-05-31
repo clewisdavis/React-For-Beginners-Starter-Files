@@ -7,7 +7,7 @@
 ## Thinking and Understanding React Components
 
 - Everything in React is a component
-- Re-usable peice of your website, similar to <h1> etc.
+- Re-usable piece of your website, similar to `<h1>` etc.
 - Allow you to build your own tags.
 - And attach data and functionality
 
@@ -31,7 +31,7 @@
 - Commenting is different, `{}`, curly brackets means you are in JS land. So a comment looks like `{ /* comment */ }`
 - And don't put a comment directly after return. Will break. If you want a comment then put it inside your element.
 
-```CODE
+```JAVASCRIPT
 render() {
     return (
         <form className="store-selector">
