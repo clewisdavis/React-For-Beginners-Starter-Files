@@ -176,7 +176,7 @@ function Header(props) {
 - A step further, as an arrow function with implicit return (remove `return()` and `{}`)
 
 ```JAVASCRIPT
-CONST Header = (props) => (
+const Header = (props) => (
     <div>
       <p>Some regular ole HTML here, {props.tagline}</p>
     </div>
@@ -202,6 +202,7 @@ const Router = () => (
   <BrowserRouter>
     <Switch>
       <Route exact path="/" component={StorePicker} />
+      <Route path="/store/:storeId" component={App} />
     </Switch>
   </BrowserRouter>
 )
@@ -213,8 +214,18 @@ export default Router;
 - `<Route>` will take `props`, fist one is `exact` on the home page `./`, then the other ones will be your site pages, then the third route is a catch all.
 - Then tell it exactly which component to render out.
 - `<Route exact path="/" component={StorePicker} />`, will render out the `<StorePicker />` component when you go to the `path="/"`
+- When the `route` is exactly `/`, use the component `StorePicker`
 - Make sure you `import` the component into your file.
 
 - Render the `<Router />` to the mounting point. Typically `index.js` file.
 - `render(<Router />, document.querySelector('#main'));`.
 - Make sure to `import Router from './components/Router';` and remove any unused.
+
+- To do a catch all, leave off the path, `<Route component={NotFound} />`. This will render the `NotFound` component when the `url` is not specified.
+
+- NOTE: the path `path="/store/:storeId"` is being stored as a `param` and pulled from the url.
+- In a future lesson, learn how to change pages.
+
+## Helper and Utility Functions
+
+-
