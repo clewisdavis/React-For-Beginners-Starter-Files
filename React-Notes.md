@@ -228,4 +228,64 @@ export default Router;
 
 ## Helper and Utility Functions
 
--
+- Not specific to react, just something that a good practice in JS.
+- Just a regular JS function, just put in a file called `helpers.js`
+- For example, converting money, or string concatenating, etc.
+- You just export from the `helper.js` file.
+
+```JAVASCRIPT
+export function formatPrice(cents) {
+  return (cents / 100).toLocaleString("en-US", {
+    style: "currency",
+    currency: "USD"
+  });
+}
+```
+
+- What's the difference between `export default`, and just `export`?
+- Named exports: if you have more then one thing you would like to export.
+- You need to know the name of the thing you are importing.
+- And use the `{}` syntax
+- `import { formatPrice } from '../helpers';`
+- Now you have access to that function in your react component.
+- To use the function inside your components. Use curley brackets to tell react this is good ole JS, `{}`, then put your function inside.
+- `{formatPrice()}`
+
+## Events, Refs and this Binding
+
+- How to handle a click, form submit etc.
+- Similar to vanilla JS
+- React will wrap your events in `SyntheticEvent` to make it cross browser
+
+- events are done inline, vs in vanilla JS, where you select it first with `querySelector` then run a `eventListener`, and when that happens you ran code.
+
+- In react what happens, you do inline event handlers on your element
+- `<button onClick={this.handleClick}>Click me!</button>`
+- `onClick` camel case, then `{}` and tell it which function to run, `onClick={this.handleClick}` when that thing happens
+
+- Within that component, add the method `handleClick`.
+
+```JAVASCRIPT
+class StorePicker extends React.Component {
+    handleClick() {
+        alert('I am here!');
+    }
+
+    render() {
+        return (
+            <form className="store-selector">
+              <h2>Please Enter a Store</h2>
+              <button onClick={this.handleClick}>Click Me!</button>
+            </form>
+        );
+    }
+}
+
+export default StorePicker;
+```
+
+- Why don't you put `()` at the end of your event? `<button onClick={this.handleClick}>Click me!</button>`
+- If you did, `this.handleClick()`, it would make the function run when the component mounts/page load, not what you want.
+- Just provide the name, and when someone clicks that button, react will call the function.
+
+- OnSubmit
