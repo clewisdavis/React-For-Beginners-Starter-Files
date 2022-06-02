@@ -284,7 +284,7 @@ class StorePicker extends React.Component {
 export default StorePicker;
 ```
 
-- Why don't you put `()` at the end of your event? `<button onClick={this.handleClick}>Click me!</button>`
+- Why don't you put `()` at the end of your event? `<button onClick={this.handleClick()}>Click me!</button>`
 - If you did, `this.handleClick()`, it would make the function run when the component mounts/page load, not what you want.
 - Just provide the name, and when someone clicks that button, react will call the function.
 
