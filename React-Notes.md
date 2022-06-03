@@ -288,4 +288,51 @@ export default StorePicker;
 - If you did, `this.handleClick()`, it would make the function run when the component mounts/page load, not what you want.
 - Just provide the name, and when someone clicks that button, react will call the function.
 
-- OnSubmit
+- For forms, put the event on the `<form>` tag, and use onsubmit
+- `<form onSubmit={this.goToStore}>Your form here</form>`
+- Then create a new method `goToStore` in your component
+
+```JAVASCRIPT
+class StorePicker extends React.Component {
+    goToStore() {
+      console.log('Going to Store');
+    }
+
+    render() {
+        return (
+            <form className="store-selector" onSubmit={this.goToStore}>
+              <h2>Please Enter a Store</h2>
+              <input type="text" required placeholder="Store Name" defaultValue={getFunName()} />
+              <button type="submit">Visit Store</button>
+            </form>
+        );
+    }
+}
+
+export default StorePicker;
+```
+
+- The default behavior or a form, is to submit the data of that form.
+- The form submitting will refresh the entire page, not what you want.
+- Need to pass in an `event` object to your method on the form element, `goToStore(event){}`
+- Then call the method, `preventDefault()`, this will stop the page from submitting.
+
+```JAVASCRIPT
+goToStore(event) {
+  event.preventDefault();
+  console.log(event);
+}
+```
+
+- *Getting the text from an input?*
+- Tempted to just do vanilla JS, `const storeName = document.querySelector(elementName);`
+- THE GOLDEN RULE IN REACT, IS DON'T TOUCH THE DOM
+- Don't manually select elements from the DOM
+- Instead of looking at the the DOM nodes, look at the React Nodes
+
+- So how do you get information out of an input?
+- We need someway to reference the input
+- You use `ref`
+- First you create an empty ref in the component `myInput = React.createRef();`
+- And on the `input` add `ref={this.myInput}`
+- It will surface the input on the component, so you can grab it.
