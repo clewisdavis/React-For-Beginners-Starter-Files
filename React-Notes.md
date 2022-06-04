@@ -358,7 +358,7 @@ goToStore(event) {
 
 - Two ways to bind your method
   
-- 1. You can use just plain ES6, you can add a `constructor(){}` method to your component. This runs before your component is created. Be sure to include `super()` within your constructor. This will run the component that you are extending first, `React.Component` which needs to be created first, before we can `extend` it.
+- ONE: You can use just plain ES6, you can add a `constructor(){}` method to your component. This runs before your component is created. Be sure to include `super()` within your constructor. This will run the component that you are extending first, `React.Component` which needs to be created first, before we can `extend` it.
 
 ```JAVASCRIPT
 class StorePicker extends React.Component {
@@ -390,7 +390,7 @@ goToStore(event) {
 
 - Downside, is you could end up with a lot of bindings in your `constructor()`
 
-- 2. Another option, instead of declaring a `method` for the function, you will set a `property`.
+- TWO: Another option, instead of declaring a `method` for the function, you will set a `property`.
 - The property will be bound to the instance and you can access it.
 - Declare a property, which is set to an arrow function.
 
