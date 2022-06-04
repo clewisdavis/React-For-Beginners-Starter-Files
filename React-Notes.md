@@ -336,3 +336,80 @@ goToStore(event) {
 - First you create an empty ref in the component `myInput = React.createRef();`
 - And on the `input` add `ref={this.myInput}`
 - It will surface the input on the component, so you can grab it.
+
+### Binding
+
+- When you make your own component, and any methods inside of it, **are NOT bound my default.**
+- So when you try and `console.log(this)` inside your custom method, you get `undefined`.
+
+```JAVASCRIPT
+goToStore(event) {
+  event.preventDefault();
+  //console log is undefined, goToStore is not bound to the component
+  console.log(this);
+}
+```
+
+- Makes it hard to reference a component inside of it's own method.
+- Especially when you get into managing state.
+
+- Solution is to bind your own methods also.
+- methods that come with React are already bound, for example, `componentDidMount()`
+
+- Two ways to bind your method
+  
+- 1. You can use just plain ES6, you can add a `constructor(){}` method to your component. This runs before your component is created. Be sure to include `super()` within your constructor. This will run the component that you are extending first, `React.Component` which needs to be created first, before we can `extend` it.
+
+```JAVASCRIPT
+class StorePicker extends React.Component {
+  constructor() {
+    super();
+    console.log('Gonna create a component');
+  }
+}
+```
+
+- Then inside of the `constructor()` you can go ahead and bind all your custom `methods`
+
+```JAVASCRIPT
+class StorePicker extends React.Component {
+  constructor() {
+    super();
+    //binding goToStore to this component
+    this.goToStore = this.goToStore.bind(this);
+  }
+}
+
+//custom method
+goToStore(event) {
+  event.preventDefault();
+  //now this will log the goToStore method
+  console.log(this);
+}
+```
+
+- Downside, is you could end up with a lot of bindings in your `constructor()`
+
+- 2. Another option, instead of declaring a `method` for the function, you will set a `property`.
+- The property will be bound to the instance and you can access it.
+- Declare a property, which is set to an arrow function.
+
+```JAVASCRIPT
+class StorePicker extends React.Component {
+  constructor() {
+    super();
+    //no longer need to bind in the constructor
+  }
+}
+
+//custom method
+goToStore = (event) => {
+  event.preventDefault();
+  //now this will log the goToStore method
+  console.log(this);
+}
+```
+
+## Handling Events
+
+-
