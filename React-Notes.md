@@ -413,4 +413,33 @@ goToStore = (event) => {
 
 ## Handling Events
 
+- Getting the value out of an input
+- After binding `this` to your method, and adding a `ref`, you can get the properties of an element. Similar to how you would do it in JS.
+- First, make sure you have your `ref` defined, and on the element you want to grab.
+- `myInput = React.createRef();`, this goes inside your component. At the same level as any methods you have defined.
+- On your element, `<input ref={this.myInput} />` be sure to add the `ref`.
+- Double check to be sure `this` is being `bind()` within your `constructor()`
+
+- Change the page?
+- Change the URL with push state, change the url without having to refresh the page.
+- `react router`
+- In your react dev tools, look at what's available to you in `props`
+- Use the history, and `push()` method
+
+```JAVASCRIPT
+    goToStore(event) {
+        // 1. Stop the form from submitting
+        event.preventDefault();
+        // 2. Get text from input
+        console.log(this.myInput.current.value);
+        const storeName = this.myInput.current.value;
+        // 3. Change the page to /store/whatever they entered.
+        this.props.history.push(`/store/${storeName}`);
+    }
+```
+
+- It seems really fast, we are using `push()` state to change the url.
+
+## Understanding State
+
 -
