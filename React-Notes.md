@@ -442,4 +442,18 @@ goToStore = (event) => {
 
 ## Understanding State
 
--
+- FUNDAMENTAL CONCEPT TO REACT
+- **What is state?** State is just an `object` that lives inside of a `component` that stores all the data that component, and it's children, need.
+- Say it again, state is just ab object that holds data that it needs, aswell as children of that component. Single source of truth.
+
+- Think of state as the *single source of truth*
+- Coming from a vanilla JS background, sometimes that data lives in multiple places, you might have a variable and use that as a place to store your data.
+- With React, the golden rule is **DON'T TOUCH THE DOM**.
+- Instead of thinking about updating all the pieces on our website, think of it as just updating our data, and letting react take it from there.
+
+- If just a regular JS app, and you had data displayed throughout the app, becomes hard to manage and update all those instances of data.
+- With React, you keep your data in state, and whenever state changes, and React will update throughout the app, anyplace you have used that variable.
+
+- Making a new component with state
+- The idea behind React, is you are not building pages of pieces, you are building components.
+- And you want to be able to use that component anywhere. You have to decide if something deserves to be it's own component.
