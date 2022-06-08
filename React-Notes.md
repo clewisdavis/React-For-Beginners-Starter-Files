@@ -457,3 +457,124 @@ goToStore = (event) => {
 - Making a new component with state
 - The idea behind React, is you are not building pages of pieces, you are building components.
 - And you want to be able to use that component anywhere. You have to decide if something deserves to be it's own component.
+
+### Getting data from a form, into state
+
+- Form component
+- When someone submits the form, we need to turn all the data from the form into a fish object.
+
+```JAVASCRIPT
+class AddFishForm extends React.Component {
+    render() {
+        return (
+            <form className="fish-edit">
+                <input name="name" type="text" placeholder="name" />
+                <input name="price" type="text" placeholder="price" />
+                <select name="status">
+                  <option value="available">Fresh!</option>
+                  <option value="available">Sold Out</option>
+                </select>
+                <textarea name="desc" placeholder="desc" />
+                <input name="image" type="text" placeholder="image" />
+                <button type="submit">+ Add Fish</button>
+            </form>
+        )
+    }
+}
+
+export default AddFishForm;
+```
+
+- Add a method for onSubmit to the form.
+- Remember to use the `properties` and arrow function syntax to bind `this` to the method.
+
+```JAVASCRIPT
+class AddFishForm extends React.Component {
+
+    // Remember, this is our syntax for binding this method so we can use 'this'.
+    createFish = (event) => {
+        //1. stop the form from submitting
+        event.preventDefault();
+        console.log("making a fish");
+    }
+
+    render() {
+        return (
+            <form className="fish-edit" onSubmit={this.createFish}>
+                <input name="name" type="text" placeholder="name" />
+                <input name="price" type="text" placeholder="price" />
+                <select name="status">
+                  <option value="available">Fresh!</option>
+                  <option value="available">Sold Out</option>
+                </select>
+                <textarea name="desc" placeholder="desc" />
+                <input name="image" type="text" placeholder="image" />
+                <button type="submit">+ Add Fish</button>
+            </form>
+        )
+    }
+}
+```
+
+- Next, we need to pull the values out of the form.
+- Two ways to do that
+  - You could use `ref`, give a ref to every form element.
+  - Another option to listen to keyup event, and mirror that state.
+
+- For each element, add a `ref={this.name}` on the element.
+- Then add the reference inside your component with `nameRef = React.createRef();`
+- Then, inside your `onsubmit` method, you can get access to the value of the input, `console.log(this.nameRef.current.value);`
+
+```JAVASCRIPT
+class AddFishForm extends React.Component {
+    // Create the ref
+    nameRef = React.createRef();
+    priceRef = React.createRef();
+    statusRef = React.createRef();
+    descRef = React.createRef();
+    imageRef = React.createRef();
+
+    // Remember, this is our syntax for binding this method so we can use 'this'.
+    createFish = (event) => {
+        //1. stop the form from submitting
+        event.preventDefault();
+        console.log(this.nameRef.current.value);
+    }
+
+    render() {
+        return (
+            <form className="fish-edit" onSubmit={this.createFish}>
+                <input name="name" ref={this.nameRef} type="text" placeholder="name" />
+                <input name="price" ref={this.priceRef} type="text" placeholder="price" />
+                <select name="status" ref={this.statusRef}>
+                  <option value="available">Fresh!</option>
+                  <option value="available">Sold Out</option>
+                </select>
+                <textarea name="desc" ref={this.descRef} placeholder="desc" />
+                <input name="image" ref={this.imageRef} type="text" placeholder="image" />
+                <button type="submit">+ Add Fish</button>
+            </form>
+        )
+    }
+}
+
+export default AddFishForm;
+```
+
+- Inside your method `createFish`, create a fish object to hold all the data from the form.
+
+```JAVASCRIPT
+    createFish = (event) => {
+        //1. stop the form from submitting
+        event.preventDefault();
+        //2. create an object to hold value of form
+        const fish = {
+            name: this.nameRef.current.value,
+            price: parseFloat(this.priceRef.current.value), // store things in cents
+            status: this.statusRef.current.value,
+            desc: this.descRef.current.value,
+            image: this.imageRef.current.value,
+        }
+        console.log(fish);
+    }
+```
