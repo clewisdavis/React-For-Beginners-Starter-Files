@@ -12,7 +12,7 @@ class App extends React.Component {
   }
 
   addFish = fish => {
-    console.log("adding a fish");
+    console.log(fish);
   }
 
   render() {
