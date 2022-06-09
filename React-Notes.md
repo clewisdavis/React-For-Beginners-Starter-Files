@@ -578,3 +578,122 @@ export default AddFishForm;
         console.log(fish);
     }
 ```
+
+- Now that you have your data in an object, *how do you get it into state?*
+- Every component in React can have it's own state.
+- However, it's common to have one parent state on a higher component, then pass it down to the children.
+- If you want to share the data with other components, it needs to be at a higher level.
+- **You cannot pass data up, you can always pass data down.**
+
+```JAVASCRIPT
+<App>
+  <Header />
+  <Order />
+  <Inventory />
+    <AddFishForm />
+</App>
+```
+
+- Store you data in `<App>` component, then you can pass it down.
+- Create state within your `<App>` component.
+
+- **Create Initial State**
+- First thing you need to do, is create the initial state. What does state look like when the component initially mounts. Common to load an empty state, then you populate.
+- You push data into state then state will update.
+- Two ways to define initial state
+  - Define a `constructor()` within your component.
+  - Or use a property. `state = {};`, state is an empty object. Preferred way accorind to Wes.
+
+```JAVASCRIPT
+class App extends React.Component {
+  // defining empty state with a constructor
+  constructor() {
+    super();
+    this.state = {
+      //empty state here
+    }
+  }
+
+  render() {
+    return (
+      //elements here
+    )
+  }
+}
+```
+
+```JAVASCRIPT
+class App extends React.Component {
+  // defining empty state with a property
+  state = {
+    // describe the pieces of state you will be using
+    fishes: {},
+    order: {}
+  }
+
+  render() {
+    return (
+      //elements here
+    )
+  }
+}
+```
+
+- Inside of your empty state, describe the pieces you will be using for you application.
+
+```JAVASCRIPT
+state = {
+  fishes: {},
+  order: {}
+}
+```
+
+- Set you object to whatever it's going to be, at a later point. Can be an array, number, null etc.
+
+- **Next, how do we get an item into state?**
+- The methods that *update* `state` and *define* `state`, should always live in the same component.
+- Create a new method inside your `App` component.
+
+```JAVASCRIPT
+class App extends React.Component {
+  state = {
+    fishes: {},
+    order: {}
+  }
+
+  //method for updating state, property syntax so you can access 'this'
+  addFish = fish => {
+    console.log("adding a fish");
+  }
+
+  render() {
+    return (
+      //elements here
+    )
+  }
+}
+```
+
+- Now, how do you call `addFish` method?
+- You your method in `App`, but you want to call it within child component.
+- HOW DO YOU GET A FUNCTION THAT LIVES IN A PARENT COMPONENT DOWN TO A LOWER LEVEL COMPONENT?
+- `props` of course
+- In this example, we are going to pass it to `<Inventory>`, then `<Inventory>` is going to pass it to our `<AddFishForm>` component.
+
+- Define the prop, `<Inventory addFish={this.addFish} />`, good practice to keep the name of the prop and method the same, `addFish`.
+- In your react dev tools, look at `<Inventory />` and you will see the `addFish` function has been passed down.
+- Now, pass it own one more level, to the `<AddFishForm />`
+- Because it has been passed in via props, it's `this.props.addFish`
+
+```JAVASCRIPT
+<App>
+  <Header />
+  <Order />
+  <Inventory addFish={this.addFish} />
+    <AddFishForm addFish={this.props.addFish} />
+</App>
+```
+
+- Now that you have access to the function within the component, add a call within your method. `this.props.addFish(fish);`
+
+- **Now, how do you get it into our state?**

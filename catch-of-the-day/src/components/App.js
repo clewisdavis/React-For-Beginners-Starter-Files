@@ -4,8 +4,15 @@ import Order from './Order';
 import Inventory from './Inventory';
 
 class App extends React.Component {
-  handleClick = () => {
-    console.log('hello there');
+  // using property syntax to define empty state
+  state = {
+    // describe the pieces of state you will be using
+    fishes: {},
+    order: {}
+  }
+
+  addFish = fish => {
+    console.log("adding a fish");
   }
 
   render() {
@@ -15,7 +22,7 @@ class App extends React.Component {
             <Header tagline="Catch of the Day" />
           </div>
           <Order />
-          <Inventory />
+          <Inventory addFish={this.addFish} />
         </div>
     )
   }
