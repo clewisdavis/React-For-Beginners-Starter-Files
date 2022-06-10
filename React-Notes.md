@@ -694,6 +694,45 @@ class App extends React.Component {
 </App>
 ```
 
-- Now that you have access to the function within the component, add a call within your method. `this.props.addFish(fish);`
+- Now that you have access to the function within the component, add a call within your method. `this.props.addFish();`
 
 - **Now, how do you get it into our state?**
+
+- In Vanilla JS, you would just update an array or object using JS. For ex; `this.state.fishes.fish1 = fish;`, this would update the object.
+- However, in React, to update state, you have to use the existing `setState()` API.
+- Say again, use `setState()` to update state.
+
+- Two steps to update state
+
+1. Take a copy of existing state, you NEVER want to reach into state and modify it directly, causes mutation with your data and bad practice.
+
+   - To make a copy, `const fishes = {...this.state.fishes};`, the `...` syntax is called an object spread is a good way to make a copy of the object.
+
+2. Add our new fish to that fishes variable, in this example, using `date.now()` to add a unique value to each state.
+
+3. Set the new fishes object to state. Called the method that is built into react, `setState();`
+
+   - Pass it the piece of state you would like to update.
+   - This will take the copy old fishes, plus our new fish, and overwrite the existing state
+   - Which will then trigger a change in react.
+   - Where ever that is displayed on the page, it will update.
+
+```JAVASCRIPT
+  addFish = fish => {
+    console.log(fish);
+    //1. Make a copy of the existing state
+    const fishes = { ...this.state.fishes };
+    //2. Add our new fish to that fishes variable
+    fishes[`fish${Date.now()}`] = fish;
+    //3. Set he new fishes object to state
+    this.setState({
+      // property and value
+      // can also pass in just `fishes` with ES6 and will be the same
+      fishes: fishes
+  });
+  }
+```
+
+- NOTE: When submitting a form, add the `reset()` method to your form to clear it out. `event.currentTarget.reset();`
+
+- NOTE: We don't have to pass the entire `state`, only the pieces we wish to update. `this.setState({ pass in the piece you wish to update })`
