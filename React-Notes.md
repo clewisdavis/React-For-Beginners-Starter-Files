@@ -736,3 +736,55 @@ class App extends React.Component {
 - NOTE: When submitting a form, add the `reset()` method to your form to clear it out. `event.currentTarget.reset();`
 
 - NOTE: We don't have to pass the entire `state`, only the pieces we wish to update. `this.setState({ pass in the piece you wish to update })`
+
+## Loading data into state onClick
+
+- Where do you create your `onClick` function?
+- If the function needs to update `state`, needs to live in the same component where `state` lives. In this case `<App />`
+- Then, how do you pass that function down? With `props`.
+
+```JAVASCRIPT
+class App extends React.Component {
+  state = {
+    fishes: {},
+    order: {}
+  }
+
+  loadSampleFishes = () => {
+    alert("loading sample");
+  }
+
+  render() {
+      return (
+        <div className="catch-of-the-day">
+          <div className="menu">
+            <Header tagline="Catch of the Day" />
+          </div>
+          <Order />
+          <Inventory 
+            loadSampleFishes={this.loadSampleFishes}
+          />
+        </div>
+    )
+  }
+}
+```
+
+- After you pass it down to child component `<Inventory/>`, add the `onClick{this.props.loadSampleFishes}` function to your event handler `onClick`.
+- NOTE: Don't forget the `this.props` when calling the function. Anything that gets passed into that component, is available on the `props` object.
+
+- Load in some sample data, `sample-fishes.js`. Import into your `<App />` component.
+- `import sampleFishes from '../sample-fishes';`
+- Then, `setState()` inside your `loadSampleFishes` function
+
+```JAVASCRIPT
+  loadSampleFishes = () => {
+    this.setState({ fishes: sampleFishes });
+  }
+```
+
+- Now, in state will be populated with all the data, and we can get to displaying the data.
+
+## Displaying State with JSX
+
+- How do we display our data.

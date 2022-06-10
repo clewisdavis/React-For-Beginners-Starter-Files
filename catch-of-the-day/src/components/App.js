@@ -2,6 +2,8 @@ import React from "react";
 import Header from './Header';
 import Order from './Order';
 import Inventory from './Inventory';
+// import sample fishes
+import sampleFishes from '../sample-fishes';
 
 class App extends React.Component {
   // using property syntax to define empty state
@@ -25,6 +27,10 @@ class App extends React.Component {
     })
   }
 
+  loadSampleFishes = () => {
+    this.setState({ fishes: sampleFishes });
+  }
+
   render() {
       return (
         <div className="catch-of-the-day">
@@ -32,7 +38,10 @@ class App extends React.Component {
             <Header tagline="Catch of the Day" />
           </div>
           <Order />
-          <Inventory addFish={this.addFish} />
+          <Inventory 
+            addFish={this.addFish} 
+            loadSampleFishes={this.loadSampleFishes}
+          />
         </div>
     )
   }
