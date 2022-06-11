@@ -4,6 +4,8 @@ import Order from './Order';
 import Inventory from './Inventory';
 // import sample fishes
 import sampleFishes from '../sample-fishes';
+import Fish from './Fish';
+
 
 class App extends React.Component {
   // using property syntax to define empty state
@@ -35,7 +37,10 @@ class App extends React.Component {
       return (
         <div className="catch-of-the-day">
           <div className="menu">
-            <Header tagline="Catch of the Day" />
+            <Header tagline="Fresh Seafood Market" />
+            <ul className="fishes">
+              {Object.keys(this.state.fishes).map(key => <p>{key}</p>)}
+            </ul>
           </div>
           <Order />
           <Inventory 

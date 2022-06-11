@@ -788,3 +788,63 @@ class App extends React.Component {
 ## Displaying State with JSX
 
 - How do we display our data.
+- Consider if it needs to be a separate component. And not to tightly bound to the existing component. Can you reuse it in other situation?
+- Make a new component, you can just use this as a starter template and copy and paste, then just name your component.
+
+```JAVASCRIPT
+import React, { Component } from 'react';
+
+class Whatever extends React.Component {
+    render() {
+        return (
+            <div className="Whatever">
+                You Did it!
+            </div>
+        )
+    }
+}
+
+export default Whatever;
+```
+
+- Then import and use your new component inside the parent component. In this case `<App>` component.
+
+### Looping over state
+
+- How do you loop over state to display?
+- JSX, doesn't come with all the conditional options like JS, `if`, `map` etc.
+- If you want to use any sort of logic inside of JSX, then you use vanilla JS.
+- We are going to loop over the data in state, and for each one, display a component.
+
+- Inside of JSX, start with a set of curly brackets `{}`, this tells JSX we are using vanilla JSX.
+
+- How do you loop over an `object`? Since state is just a plain object, you use `Object.keys()` to map over.
+- `{Object.keys(this.state.fishes)}`
+- `Object.keys()`, will allow you to put the state into an array, and loop over.
+
+- Then you put a `.map()` on the end to map over each key and return a DOM element with the key inside of it.
+- `{Object.keys(this.state.fishes).map(key => <p>{key}</p>)}`
+
+```JAVASCRIPT
+  render() {
+      return (
+        <div className="catch-of-the-day">
+          <div className="menu">
+            <Header tagline="Fresh Seafood Market" />
+            <ul className="fishes">
+              {Object.keys(this.state.fishes).map(key => <p>{key}</p>)}
+            </ul>
+          </div>
+          <Order />
+          <Inventory 
+            addFish={this.addFish} 
+            loadSampleFishes={this.loadSampleFishes}
+          />
+        </div>
+    )
+  }
+```
+
+- Now whenever there is something in state, we will map over it and display.
+
+- Error: Unique Key Prop
