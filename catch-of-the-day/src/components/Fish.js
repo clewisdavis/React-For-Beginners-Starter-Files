@@ -3,9 +3,15 @@ import React, { Component } from 'react';
 class Fish extends React.Component {
     render() {
         return (
-            <div className="single-fish">
-                fish here
-            </div>
+            <li className="menu-fish">
+                <img src={this.props.details.image} alt={this.props.details.name} />
+                <h3 className="fish-name">
+                    {this.props.details.name}
+                    <span className="price">
+                        {this.props.details.price}
+                    </span>
+                </h3>
+            </li>
         )
     }
 }

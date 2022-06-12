@@ -847,4 +847,77 @@ export default Whatever;
 
 - Now whenever there is something in state, we will map over it and display.
 
-- Error: Unique Key Prop
+- Error: Unique Key Prop, `each child in a list should have a unique key prop.`
+- In order for React to be fast, it needs to be able to get to the element that needs to be updated. React needs to know how to quickly get to a specific element and update just that little piece of DOM.
+- If it doesn't have a unique identifier, then it's much slower and will give error.
+- SOLUTION: You have to give it a property of `key`, built into react, and it can be a key of anything that is unique.
+- In this example, we can use `key={key}` as our unique identifier.
+
+```JAVASCRIPT
+  render() {
+      return (
+        <div className="catch-of-the-day">
+          <div className="menu">
+            <Header tagline="Fresh Seafood Market" />
+            <ul className="fishes">
+              {Object.keys(this.state.fishes).map(key => <Fish key={key} />)}
+            </ul>
+          </div>
+          <Order />
+          <Inventory 
+            addFish={this.addFish} 
+            loadSampleFishes={this.loadSampleFishes}
+          />
+        </div>
+    )
+  }
+```
+
+- Now, in your `<Fish />` component, each element has a unique identifier.
+
+### How to get information from state, to your component?
+
+- How do you get information out of state, and display in your component?
+- PROPS!, how does data get anywhere, `props`.
+- Just add a `prop` to your `<Fish />` component, `<Fish key={key} details={this.state.fishes.fish1} />`
+- To make it dynamic, because you are looping over state. Add square brackets to the end. This is just vanilla JS way to loop over items in an object.
+- `<Fish key={key} details={this.state.fishes[key]} />`
+
+```JAVASCRIPT
+  render() {
+      return (
+        <div className="catch-of-the-day">
+          <div className="menu">
+            <Header tagline="Fresh Seafood Market" />
+            <ul className="fishes">
+              {Object.keys(this.state.fishes).map(key => <Fish key={key} details={this.state.fishes[key]} />)}
+            </ul>
+          </div>
+          <Order />
+          <Inventory 
+            addFish={this.addFish} 
+            loadSampleFishes={this.loadSampleFishes}
+          />
+        </div>
+    )
+  }
+```
+
+- Now each of your components, has a prop called `details`. Inside of that props, you have all the data you need to start rendering it to the page.
+- Once you have passed in via `props`, you have access to all the data to display on the page.
+- Just a template game at this point.
+- Be sure to use the name of the prop you passed in, to access the data.
+- `<img src={this.props.details.image} alt={this.props.details.name} />`
+- You don't need the `""` around the attribute
+
+```JAVASCRIPT
+class Fish extends React.Component {
+    render() {
+        return (
+            <li className="menu-fish">
+                <img src={this.props.details.image} alt={this.props.details.name} />
+            </li>
+        )
+    }
+}
+```
