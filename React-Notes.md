@@ -921,3 +921,46 @@ class Fish extends React.Component {
     }
 }
 ```
+
+- Now just bring in the other pieces of information that you passed in via props.
+  
+- NOTE:
+- One of the items, is the price of the item. How do you format money? Use your helper function for converting money.
+- Wes gave us a helper file that contains a function to format the price.
+- Import the function, `import { formatPrice } from '../helpers';`, then you can use it in your component.
+- Then, just wrap your `price` inside the `formatPrice()` helper function within your component.
+- `<span className="price">{formatPrice(this.props.details.price)}</span>`
+
+- Continue to populate your component with all the data passed in via props object.
+
+```JAVASCRIPT
+import React, { Component } from 'react';
+import { formatPrice } from '../helpers';
+
+class Fish extends React.Component {
+    render() {
+        return (
+            <li className="menu-fish">
+                <img src={this.props.details.image} alt={this.props.details.name} />
+                <h3 className="fish-name">
+                    {this.props.details.name}
+                    <span className="price">
+                        {formatPrice(this.props.details.price)}
+                    </span>
+                </h3>
+                <p>{this.props.details.desc}</p>
+                <button>Add To Cart</button>
+            </li>
+        )
+    }
+}
+
+export default Fish;
+```
+
+- Fancy pants, you can shortcut `this.props.details.name` by just adding a variable inside your component. That way you don't have to type out `this.props.details.thing` every single time.
+- And in ES6, you can destructing, and just create multiple variables in a single shot.
+- `const { image, name } = this.props.details;`, create variables `image` and `name` this you can just use the variable name inside your component. Vs. having to write out `this.props.details.whatever` each time.
+- Goes inside the `render(){}`, before the `return()`.
+
+## Updating our Order state
