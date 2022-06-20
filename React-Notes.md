@@ -964,3 +964,89 @@ export default Fish;
 - Goes inside the `render(){}`, before the `return()`.
 
 ## Updating our Order state
+
+- Toggle the style of the button based on data in props.
+- Create a `boolean` variable in the component your button lives.
+- `const isAvailable = this.props.details.status === 'available';`, this will be either `true` or `false` depending on value of `status`.
+- Add a `disabled` property to your button using the `isAvailable` variable.
+- And update the next, with a conditional (ternary) operator.
+- `<button disabled={!isAvailable}>{isAvailable ? 'Add To Order' : 'Sold Out!'}</button>`
+
+### How do you add this data to state?
+
+- Where do you make a function that will add to order? Same place your order state lives, in the `<App>` component.
+- NOTE: General rule to organize your methods, `state`, `lifecycle` events, `custom` stuff, then finally the `render()`.
+
+- Create a method to add date to your order state.
+
+```JAVASCRIPT
+  addToOrder = (key) => {
+    // 1. Copy of state
+    const order = { ...this.state.order };
+    // 2. Either or add to order, or update our order number
+    order[key] = order[key] + 1 || 1;
+    // 3. Call setState to update our state object
+    this.setState({ order: order });
+  }
+```
+
+- Tip: Test out if your method is working w/o having to wire up to a button.
+- In console, `$r` on the component where the method lives.
+- Then, just call it by adding `()` to the end. `$r.addToOrder()`
+- After running it, go and check your updated state.
+
+- Hooking the method up to the button.
+- Pass it down via `props` to the component where the button lives. In this case, it's the `<Fish />` component.
+- `<Fish addToOrder={addToOrder} />`
+- Then, inside your component `<Fish/>`, you have to add an `onClick` event to your button
+
+- Accessing `key`, you cannot get access to key by just calling it.
+- You have to pass it a second time via props. Using something other then they `key` keyword.
+- For example; `index={key}`, `<Fish addToOrder={addToOrder} index={key} />`
+
+- Add event handler to your button and call the method `addToOrder` to update `order` state.
+- `<button onClick={this.handleClick}> Add To Order</button>`
+- And don't forget the method before the `render()` inside your component.
+
+```JAVASCRIPT
+    handleClick = () => {
+        this.props.addToOrder(this.props.index);
+    }
+```
+
+- Now when you click on a Add To Order button, your order state will be updated.
+
+```JAVASCRIPT
+class Fish extends React.Component {
+    // add event handler to call addToOrder method 
+    handleClick = () => {
+        this.props.addToOrder(this.props.index);
+    }
+    render() {
+        // boolean to tell is available or not
+        const isAvailable = this.props.details.status === 'available';
+        return (
+            <li className="menu-fish">
+                <img src={this.props.details.image} alt={this.props.details.name} />
+                <h3 className="fish-name">
+                    {this.props.details.name}
+                    <span className="price">
+                        {formatPrice(this.props.details.price)}
+                    </span>
+                </h3>
+                <p>{this.props.details.desc}</p>
+                <button disabled={!isAvailable} onClick={this.handleClick}>
+                    {isAvailable ? 'Add To Order' : 'Sold Out!'}
+                </button>
+            </li>
+        )
+    }
+}
+```
+
+- Alternative, you could just do that inline vs. creating a separate method.
+- `onClick={() => this.props.addToOrder(this.props.index)};`
+
+## Displaying Order State with JSX
+
+-
