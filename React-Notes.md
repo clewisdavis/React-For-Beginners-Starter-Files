@@ -1049,4 +1049,14 @@ class Fish extends React.Component {
 
 ## Displaying Order State with JSX
 
--
+- We need to take the order state and add it to the page.
+- Display the item, price, add multiple, display other items, display the total.
+- How do we get stuff to a component? Again, `props`.
+- In the `<Order>` component, you need the state for `fishes` and `order`
+
+- Do you need the entire state? You can also do an object spread, `{...this.state}`
+- Takes everything from state and puts into order.
+- But you want to know what type of data gets past in. Automatically passes down all the data regardless if you need it or not.
+- You should not be passing down data unless you need it.
+- Just pass down the thigns you need via props.
+- `<Order fishes={this.state.fishes} order={this.state.order} />`
