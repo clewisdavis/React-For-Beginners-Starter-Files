@@ -1058,5 +1058,62 @@ class Fish extends React.Component {
 - Takes everything from state and puts into order.
 - But you want to know what type of data gets past in. Automatically passes down all the data regardless if you need it or not.
 - You should not be passing down data unless you need it.
-- Just pass down the thigns you need via props.
+- Just pass down the things you need via props.
 - `<Order fishes={this.state.fishes} order={this.state.order} />`
+
+- Then to display it in your component, just reference the data you want to display from your `prop` you passed in. Inside of `{}`.
+
+```JAVASCRIPT
+<h3 className="fish-name">
+  {this.props.details.name}
+  <span className="price">
+      {formatPrice(this.props.details.price)}
+  </span>
+</h3>
+```
+
+- NOTE: You can load in helper functions, like the `formatPrice()` above. Just import it into your component, ES6 style. And call it. `import { formatPrice } from "../helpers";`
+
+### Render Function
+
+- When you find yourself having to much code inside a component, probably means you are doing to much in a specific component. And you could shell off some of that to separate component.
+- In that case, make separate `render()` functions inside of a single component.
+- Above your `render()` function, you can create a new render function.
+
+```JAVASCRIPT
+    renderOrder = key => {
+        return <li>{key}</li>
+    }
+    render() {
+      //your component code here
+      return (
+        //markup here
+      )
+    }
+```
+
+- Then inside your component, simplifies things if you have to loop over any data.
+
+```JAVASCRIPT
+    renderOrder = key => {
+        return <li>{key}</li>
+    }
+    render() {
+      return (
+        //markup here
+        <div className="order-wrap">
+                <h2>Order</h2>
+                  <ul>
+                    //just call the render function
+                    {orderIds.map(this.renderOrder)}
+                  </ul>
+                <div className="total">
+                  Total:
+                  <strong>{formatPrice(total)}</strong>
+                </div>
+        </div>
+      )
+    }
+```
+
+## Persisting our State with Firebase, database
