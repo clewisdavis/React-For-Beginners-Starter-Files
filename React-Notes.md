@@ -1117,3 +1117,15 @@ class Fish extends React.Component {
 ```
 
 ## Persisting our State with Firebase, database
+
+- Firebase from Google, allow you to do realtime vs. AJAX using web sockets
+- Allow you to maintain state across browers and sessions. Updating it in Firebase will update where ever that session is open.
+
+- Go to [Firebase](https://console.firebase.google.com) and create a new project. Sign up if not already.
+- Once you created a new Firebase project, add a `base.js` file in your `src` directory.
+- Import, `Rebase`, allows you to mirror state, react Firebase specific package.
+- `import Rebase from "re-base";`
+- Import, `firebase`, needed to set up firebase
+- `import firebase from 'firebase';`
+
+-
