@@ -1160,4 +1160,29 @@ export default base;
 
 ### Lifecycle Methods
 
--
+- Methods in React, that tell us when certain things are happening.
+- Similar to jQuery, `document.ready()` for example, tells us when the document is ready.
+- We are going to use, `componentDidMount()`
+- [Lifecycle Methods](https://reactjs.org/docs/react-component.html#reference)
+
+- To sync the data and persist it in the firebase, database
+
+```JAVASCRIPT
+  componentDidMount() {
+    console.log('did mount');
+    const { params } = this.props.match;
+    // sync the state to firebase
+    this.ref = base.syncState(`${params.storeId}/fishes`, {
+      context: this,
+      state: 'fishes'
+    });
+  }
+
+  componentWillUnmount() {
+    console.log('did not mount');
+    // clean up data when <App> component unmounts
+    base.removeBinding(this.ref);
+  }
+```
+
+## Persisting Order State with localstorage
