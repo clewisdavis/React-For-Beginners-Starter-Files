@@ -1186,3 +1186,43 @@ export default base;
 ```
 
 ## Persisting Order State with localstorage
+
+- Another way to persist data, that is not in a database
+- Keep data in users browser, so you can reinstate it if they refresh, or leave and come back.
+- Local Storage, key value token
+- In Firefox, inspector panel > Storage > Local Storage
+- You can store data, then come back to it at a later time, `Key: Value`
+
+- How do you persist your stat in local storage?
+- Use [lifecycle event](https://reactjs.org/docs/react-component.html#componentdidupdate), `componentDidUpdate()`, invoked immediately after an update occurs. Not called for the initial render.
+- Update local storage, showing us what someone has added to their order.
+
+- Inside your `<App>` component, add `componentDidUpdate()` with your other lifecycle methods.
+- `componentDidUpdate()` does not take any arguments. You can reference your props, with `this.props.order`
+
+```JAVASCRIPT
+  componentDidUpdate() {
+    console.log(this.state.order);
+    console.log('it updated!');
+  }
+```
+
+- Now, how do we get that into our local storage?
+- Use the `setItem()` method, which excepts `key` and `value`.
+- `localStorage.setItem(this.props.match.params.storeId, this.state.order);`
+- However, in this case, we only get back `[object object]` for the value.
+- Because, anytime you try to put an object into a place, where a string is required. The browser will say, I was expecting a string but you game me something else. I am just going to call the `toSting()` method on it and it give you `[object object]`
+
+- So we need to convert that object to a string representation, using `JSON.stringify()` does.
+- Will return the string version of what that object is.
+
+```JAVASCRIPT
+  componentDidUpdate() {
+    console.log(this.state.order);
+    localStorage.setItem(this.props.match.params.storeId, JSON.stringify(this.state.order));
+  }
+```
+
+- Now, in your local storage, you see the correct value when you add an item to order.
+- However when you refresh, it updates to a blank object.
+- In your `componentDidMount()` you have to reinstate the local storage.

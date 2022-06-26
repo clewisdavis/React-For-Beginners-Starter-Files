@@ -17,12 +17,19 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    console.log('did mount');
     const { params } = this.props.match;
+    // reinstate the local storage
+    const localStorageRef = localStorage.getItem(params.storeId);
+    console.log(localStorageRef);
     this.ref = base.syncState(`${params.storeId}/fishes`, {
       context: this,
       state: 'fishes'
     });
+  }
+
+  componentDidUpdate() {
+    console.log(this.state.order);
+    localStorage.setItem(this.props.match.params.storeId, JSON.stringify(this.state.order));
   }
 
   componentWillUnmount() {
