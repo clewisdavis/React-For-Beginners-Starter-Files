@@ -1185,7 +1185,7 @@ export default base;
   }
 ```
 
-## Persisting Order State with localstorage
+## Persisting Order State with local storage
 
 - Another way to persist data, that is not in a database
 - Keep data in users browser, so you can reinstate it if they refresh, or leave and come back.
@@ -1226,3 +1226,28 @@ export default base;
 - Now, in your local storage, you see the correct value when you add an item to order.
 - However when you refresh, it updates to a blank object.
 - In your `componentDidMount()` you have to reinstate the local storage.
+
+- When the component mounts, you have to re-instate the local storage.
+- Use `localStorage.getItem()` to get the local storage.
+- const `localStorageRef = localStorage.getItem();`, [localStorage MDN](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
+- And you want to get the item from `params.storeId`
+
+```JAVASCRIPT
+  componentDidMount() {
+    const { params } = this.props.match;
+    // reinstate the local storage
+    const localStorageRef = localStorage.getItem(params.storeId);
+    console.log(localStorageRef);
+  }
+```
+
+- Next, you want to take that and set it to state.
+- In the example, we are visiting a brand new store, so you have to add a conditional.
+
+- BUG: Make sure the local storage is loaded before you continue. In the `<Order>` component.
+- If there is no `fish`, then return `null`, `if(!fish) return null;`
+- When you return null from anything, it will return absolutely nothing.
+
+- Now you are re-instating local storage, from multiple stores.
+
+## Bi-directional Data Flow and Live State Editing

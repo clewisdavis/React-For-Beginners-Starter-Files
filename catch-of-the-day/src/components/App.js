@@ -20,7 +20,9 @@ class App extends React.Component {
     const { params } = this.props.match;
     // reinstate the local storage
     const localStorageRef = localStorage.getItem(params.storeId);
-    console.log(localStorageRef);
+    if(localStorageRef) {
+      this.setState({ order: JSON.parse(localStorageRef) });
+    }
     this.ref = base.syncState(`${params.storeId}/fishes`, {
       context: this,
       state: 'fishes'
