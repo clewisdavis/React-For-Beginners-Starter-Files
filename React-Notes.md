@@ -1251,3 +1251,7 @@ export default base;
 - Now you are re-instating local storage, from multiple stores.
 
 ## Bi-directional Data Flow and Live State Editing
+
+- Edit data and have it sync up to firebase database
+
+-
