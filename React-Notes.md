@@ -1253,5 +1253,90 @@ export default base;
 ## Bi-directional Data Flow and Live State Editing
 
 - Edit data and have it sync up to firebase database
+- Set up your inventory form, so when you edit the data, it is synced up with the firebase database
+- First, you need to get your inventory, and loop over your inventory and populate each inventory form item
 
--
+- Create a new `<EditFishForm>` component.
+
+```JAVASCRIPT
+import React from 'react';
+
+class EditFishForm extends React.Component {
+    render() {
+        return (
+            <p>Edit Fish Form here</p>
+        )
+    }
+}
+
+export default EditFishForm;
+```
+
+- Then we want to go into our `<Inventory>` component and loop over all our inventory.
+- Pass the inventory down, via `props`, from your `<App>` component down to `<Inventory fishes={this.state.fished}>`
+- Double check in react dev tools, you have the inventory `fishes` object.
+
+- Next, inside your `<Inventory>` you have to loop over the `<EditFishForm>` inventory form and populate it with the data from `fishes`
+
+- Use `.map()` to render out an `<EditFishForm>` component.
+- Note, turn it into an array before you `.map()` over it.
+- `{Object.keys(this.props.fishes).map(fish => <EditFishForm />)}`
+- Now, for every item in `fishes` it will render out an `<EditFishForm>` component
+
+- Build out your `<EditFishForm>` component with the form fields.
+
+```JAVASCRIPT
+import React from 'react';
+
+class EditFishForm extends React.Component {
+    render() {
+        return (
+            <div className="fish-edit">
+                <input type="text" name="name" value={this.props.fish.name} />
+                <input type="text" name="price" value={this.props.fish.price} />
+                <select type="text" name="status" value={this.props.fish.status}>
+                  <option value="available">Fresh!</option>
+                  <option value="available">Sold Out</option>
+                </select>
+                <textarea type="text" name="desc" value={this.props.fish.desc} />
+                <input type="text" name="image" value={this.props.fish.image} />
+            </div>
+        )
+    }
+}
+
+export default EditFishForm;
+```
+
+- And pass down the individual fish items with props from the `<Inventory>` component
+- `{Object.keys(this.props.fishes).map(fish => <EditFishForm fish={this.props.fishes[key]} />)}`
+- Now, every single edit fish form, has the data populated in the form.
+
+```JAVASCRIPT
+class Inventory extends React.Component {
+    render() {
+        return (
+            <div className="inventory">
+                <h2>Inventory</h2>
+                {Object.keys(this.props.fishes).map(key => (
+                    <EditFishForm key={key} fish={this.props.fishes[key]} />
+                ))}
+                <AddFishForm addFish={this.props.addFish} />
+                <button onClick={this.props.loadSampleFishes}>Load Sample Fishes</button>
+            </div>
+        )
+    }
+}
+```
+
+- Note: When looping over, each child in a array should have a unique "key" prop.
+- In the component you are looping over, you need to add `key={key}` so that each item is unique.
+
+```JAVASCRIPT
+{Object.keys(this.props.fishes).map(key => (
+    <EditFishForm key={key} fish={this.props.fishes[key]} />
+))}
+```
+
+- Note: React does not like it when you put state in an editable area, without a plan for updating it. `Warning: You provided a value prop to a form field without an onChange handler.`
+- On your input field, if you want to be able to listen for it, you need to listen for an `onChange` event.
