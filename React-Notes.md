@@ -1340,3 +1340,86 @@ class Inventory extends React.Component {
 
 - Note: React does not like it when you put state in an editable area, without a plan for updating it. `Warning: You provided a value prop to a form field without an onChange handler.`
 - On your input field, if you want to be able to listen for it, you need to listen for an `onChange` event.
+
+### Create and listen for an onChange event
+
+- On each form field, add a `onChange` listener.
+- `onChange={this.handleChange}` and create your custom `handleChange` method.
+
+```JAVASCRIPT
+handleChange = (event) => {
+  console.log(event.target);
+}
+```
+
+- On each event, we can use `target` to give us the actual element.
+- And then you can use `event.target.value` to get the actual value of the form.
+
+```JAVASCRIPT
+class EditFishForm extends React.Component {
+
+    //create a handleChange method
+    handleChange = (event) => {
+        console.log(event.target.value);
+    }
+    render() {
+        return (
+            <div className="fish-edit">
+                <input 
+                    type="text" 
+                    name="name" 
+                    // add your listener when the input is updated. 
+                    onChange={this.handleChange} 
+                    value={this.props.fish.name} 
+                />
+            </div>
+        )
+    }
+}
+```
+
+- But, react will not let you update the form, until it's in state.
+- First we have to update the state object, in the higher level `<App>` component.
+- Update the state
+
+1. Take a copy of the current fish
+
+```JAVASCRIPT
+const updatedFish = {
+  ...this.props.fish,
+  name: event.target.value
+}
+```
+
+- Problem with this, it doesn't know how to update the other items in the form.
+- We want the value that being updated to be dynamic.
+- You can figure out what is being updated, by using the `name` property on each form element. `event.target.name`. Make sure each form element has a name property.
+- Use `[]` and set it the `event.target.value`.
+
+```JAVASCRIPT
+const updatedFish = {
+  // make a copy of current state
+  ...this.props.fish,
+  // then overwrite the change
+  [event.currentTarget.name]: event:currentTarget.value
+}
+```
+
+2. How to you get that to state?
+
+- In the component where you state lives `<App>`, create a new method, `updateFish`
+
+```JAVASCRIPT
+  // Method to update the state from edit fish component
+  updateFish = (key, updatedFish) => {
+    //1. Take a copy of the current state
+    const fishes = { ...this.state.fishes };
+    //2. Update that state
+    fishes[key] = updatedFish;
+    //3. Set that to state
+    this.setState({ fishes: fishes });
+  }
+```
+
+- Then pass your new function down via `props` to the component. `<Inventory updateFish={this.updateFish} />
+- Pass down one more time, to your `<EditFishForm updateFish={this.props.updateFish}>`
