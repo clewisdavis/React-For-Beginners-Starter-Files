@@ -1423,3 +1423,47 @@ const updatedFish = {
 
 - Then pass your new function down via `props` to the component. `<Inventory updateFish={this.updateFish} />
 - Pass down one more time, to your `<EditFishForm updateFish={this.props.updateFish}>`
+- Run into the problem, how do you get the key?
+- Cannot access the key, when we are inside of a component. So if you need the key, you have to pass it down via `props`
+
+#### Walk through what's happening
+
+- Have an input, where the value is set from `props`, fish name, `this.props.fish.name`, which is living in state
+- Then, when something changes on that `input`, call the function `handleChange`
+- React will then take that value from `event.target.value` that the user typed
+- We take that value and update our fish object.
+
+```JAVASCRIPT
+const updatedFish = { 
+  // make a copy
+  ...this.props.fish,
+  // then overwrite the change
+  [event.currentTarget.name]: event.target.value
+};
+```
+
+- Finally we send all those changes upstream to our `<App>` component, because that's where our state lives. `this.props.updateFish(this.props.index, updatedFish)`
+
+```JAVASCRIPT
+    //create a handleChange method
+    handleChange = (event) => {
+        console.log(event.target.name);
+        // update that fish
+        // 1. Take a copy fo the current fish
+        const updatedFish = { 
+            // make a copy
+            ...this.props.fish,
+            // then overwrite the change
+            [event.currentTarget.name]: event.target.value
+        };
+        // Call the updateFish method that lives in <App>, pass in the key and updatedFish object. 
+        this.props.updateFish(this.props.index, updatedFish)
+    }
+```
+
+- How you want to handle state living in an input.
+
+## Removing Items from State
+
+- CRUD, Create, Read, Update and Delete
+- Go over deleting items from our `<App>`
