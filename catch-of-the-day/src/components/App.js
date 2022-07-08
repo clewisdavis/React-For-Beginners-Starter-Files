@@ -62,6 +62,17 @@ class App extends React.Component {
     this.setState({ fishes: fishes });
   }
 
+  // Method to delete the fish, CRUD, takes a key param form which fish to delete
+  deleteFish = (key) => {
+    console.log('fish was deleted');
+    //1. take a copy of state
+    const fishes = { ...this.state.fishes };
+    //2. update the state, remove an item from state, set the fish you don't want to null
+    fishes[key] = null;
+    //3. update state
+    this.setState( {fishes });
+  }
+
   loadSampleFishes = () => {
     this.setState({ fishes: sampleFishes });
   }
@@ -90,6 +101,7 @@ class App extends React.Component {
             updateFish={this.updateFish}
             loadSampleFishes={this.loadSampleFishes}
             fishes={this.state.fishes}
+            deleteFish={this.deleteFish}
           />
         </div>
     )

@@ -1466,4 +1466,34 @@ const updatedFish = {
 ## Removing Items from State
 
 - CRUD, Create, Read, Update and Delete
-- Go over deleting items from our `<App>`
+- Go over deleting items from our inventory and our order `<App>`
+
+- Create a new method, `deleteFish` in our `<App>` component.
+- Add `key` as a param so you know which fish to remove
+
+```JAVASCRIPT
+  deleteFish = (key) => {
+    //1. take a copy of state
+    const fishes = { ...this.state.fishes };
+    //2. update the state, remove an item from state, set the fish you don't want to null
+    // if you want firebase database to also remove it, you have to set it to null
+    // fishes[] is same as fishes.fish1 etc. 
+    fishes[key] = null;
+    //3. update state
+    this.setState( { fishes });
+  }
+```
+
+- Very similar to the update fish method, except we are setting it to `null` vs. updating.
+- Test out your `deleteFish` method, go to the React Dev tools, and find the component where your method lives. `<App>`
+- Then go to Console, `$r.deleteFish('fish1')`, run the method and pass in the parameter.
+
+### Hooking this method up to a button
+
+- Pass the function down via `props` to the component where your button lives, `<EditFishForm>`
+- Then create an inline `onClick` handler on your button, calling the function `deleteFish()`
+- And pass in the key from your props, `this.props.index`
+
+```JAVASCRIPT
+<button onClick={() => this.props.deleteFish(this.props.index)}>Remove Fish</button>
+```
