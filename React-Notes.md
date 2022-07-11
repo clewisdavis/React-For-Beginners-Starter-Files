@@ -1497,3 +1497,12 @@ const updatedFish = {
 ```JAVASCRIPT
 <button onClick={() => this.props.deleteFish(this.props.index)}>Remove Fish</button>
 ```
+
+### Remove from your order
+
+- Hook up a remove button from your order.
+- Can you do this on your own?
+
+1. Create a `removeOrder` method in `<App>`
+2. Pass it down via props to `<Order>` component
+3. In `<Order>`, create a new button, with inline onClick to call the `removeOrder()` method

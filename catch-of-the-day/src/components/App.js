@@ -30,7 +30,7 @@ class App extends React.Component {
   }
 
   componentDidUpdate() {
-    console.log(this.state.order);
+    // console.log(this.state.order);
     localStorage.setItem(this.props.match.params.storeId, JSON.stringify(this.state.order));
   }
 
@@ -39,7 +39,7 @@ class App extends React.Component {
   }
 
   addFish = fish => {
-    console.log(fish);
+    // console.log(fish);
     //1. Make a copy of the existing state
     const fishes = { ...this.state.fishes };
     //2. Add our new fish to that fishes variable
@@ -64,13 +64,23 @@ class App extends React.Component {
 
   // Method to delete the fish, CRUD, takes a key param form which fish to delete
   deleteFish = (key) => {
-    console.log('fish was deleted');
+    // console.log('fish was deleted');
     //1. take a copy of state
     const fishes = { ...this.state.fishes };
     //2. update the state, remove an item from state, set the fish you don't want to null
     fishes[key] = null;
     //3. update state
     this.setState( {fishes });
+  }
+
+  deleteOrder = (key) => {
+    console.log('Order Deleted');
+    //1. take a copy of state
+    const order = { ...this.state.order };
+    //2. remove the item from order
+    delete order[key];
+    //3. set new state
+    this.setState( { order });
   }
 
   loadSampleFishes = () => {
@@ -95,7 +105,11 @@ class App extends React.Component {
               {Object.keys(this.state.fishes).map(key => <Fish key={key} details={this.state.fishes[key]} addToOrder={this.addToOrder} index={key} />)}
             </ul>
           </div>
-          <Order fishes={this.state.fishes} order={this.state.order} />
+          <Order 
+            fishes={this.state.fishes} 
+            order={this.state.order}
+            deleteOrder={this.deleteOrder}
+          />
           <Inventory 
             addFish={this.addFish} 
             updateFish={this.updateFish}
