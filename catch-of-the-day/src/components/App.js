@@ -80,7 +80,7 @@ class App extends React.Component {
     //2. remove the item from order
     delete order[key];
     //3. set new state
-    this.setState( { order });
+    this.setState({ order });
   }
 
   loadSampleFishes = () => {

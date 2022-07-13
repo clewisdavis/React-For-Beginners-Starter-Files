@@ -1504,5 +1504,40 @@ const updatedFish = {
 - Can you do this on your own?
 
 1. Create a `removeOrder` method in `<App>`
-2. Pass it down via props to `<Order>` component
+
+```JAVASCRIPT
+  deleteOrder = (key) => {
+    //1. take a copy of state
+    const order = { ...this.state.order };
+    //2. remove the item from order
+    delete order[key];
+    //3. set new state
+    this.setState({ order });
+  }
+```
+
+2. Pass it down via props to `<Order deleteOrder={this.deleteOrder}>` component
 3. In `<Order>`, create a new button, with inline onClick to call the `removeOrder()` method
+
+```JAVASCRIPT
+  <button onClick={() => this.props.deleteOrder(key)}>Remove Order</button>
+```
+
+## Animating React Components
+
+- To add animation to the orders, going to use `TransitionGroup` and `CSSTransition`
+- `import { TransitionGroup, CSSTransition } from "react-transition-group";`
+- [Animation Docs](https://reactjs.org/docs/animation.html#low-level-api-reacttransitiongroup)
+
+- Wrap your element around a `<TransitionGroup>` tag. And give it a component property.
+- Tells it what element to render out to the page.
+
+```JAVASCRIPT
+<ReactTransitionGroup component="ul">  
+  {/* ... */}
+</ReactTransitionGroup>
+```
+
+- Wrap the element you want to animate, with a `<CSSTransition>`
+- It takes multiple arguments, `classNames`, `key` and `timeout`
+- See `<Order>` component for reference.
