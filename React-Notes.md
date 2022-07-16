@@ -1539,5 +1539,20 @@ const updatedFish = {
 ```
 
 - Wrap the element you want to animate, with a `<CSSTransition>`
-- It takes multiple arguments, `classNames`, `key` and `timeout`
+- It takes multiple arguments, `classNames="order"`, `key={key}` and `timeout={{ enter: 250, exit: 250}}`
 - See `<Order>` component for reference.
+
+- To animate, this project uses a language called stylus. Same of Sass, has the option of doing things as indentation.
+- But you can write like regular CSS.
+- In stylus, if you mix spaces and characters, it will break.
+
+- The downside to using 'create-react-app` is you cannot use any custom pre-processor unless you use eject.
+- In the `package.json`, you can see the scripts for running a watch on the stylus.
+- Run `npm run styles:watch` just watch for style changes
+- To run the build and watch for style changes, use the `npm run watch` script, will run both at the same time. See `package.json` file for more.
+
+- To animate CSS, see video for demo
+
+## Component Validation with PropTypes
+
+-
