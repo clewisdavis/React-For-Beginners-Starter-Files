@@ -1552,7 +1552,99 @@ const updatedFish = {
 - To run the build and watch for style changes, use the `npm run watch` script, will run both at the same time. See `package.json` file for more.
 
 - To animate CSS, see video for demo
+- Lots of assumptions made about CSS knowledge. See Video 22.
 
 ## Component Validation with PropTypes
 
--
+- Prop types, every time you have a component.
+- Validate the data you are passing in. So it's what you expect.
+- If you work on a team, how do others know, what the prop type is supposed to be?
+- Prop Types, allow us to specify ahead of time, what is passed in and how to be used.
+- If someone doesn't pass in the right type of data, we give them a warning.
+
+- Separate package, `import PropTypes from "prop-types";`
+- Can also use other languages, TypsScript, or Type Flow
+
+### PropTypes with a stateless functional component
+
+- In your component, import `PropTypes`, then before the export, specify all the props in an object.
+
+```JAVASCRIPT
+Header.propTypes = {
+    tagline: PropTypes.string.isRequired
+}
+```
+
+- `string` tells is what type, and `isRequired` if the prop is required or not.
+
+```JAVASCRIPT
+import React, { Component } from 'react';
+import PropTypes from "prop-types";
+
+const Header = (props) => (
+    <div className="top">
+        <h1>
+            Catch
+            <span className="ofThe">
+                <span className="of">Of</span> 
+                <span className="the">The</span> 
+            </span>
+            Day</h1>
+            <h3 className="tagline">
+                <span>{props.tagline}</span>
+            </h3>
+    </div>
+);
+
+// stateless functional component
+Header.propTypes = {
+    tagline: PropTypes.string.isRequired
+}
+
+export default Header;
+```
+
+- Now, if you do not include the `tagline` prop for the `<Header>` component, you will get a warning in the console.
+- These errors will not make it to production.
+- If you pass in the wrong type, the console will warn you. `expected a string`
+
+### PropTypes with regular React Component
+
+- Put a `static` propType within the component. To declare for all of the component.
+
+```JAVASCRIPT
+class Fish extends React.Component {
+  static propTypes = {
+
+  }
+}
+```
+
+- When you are passing in an object of data. Use `PropTypes.shape({})`.
+- Pass in an object of the data that is to be displayed.
+- [Typechecking with PropTypes](https://reactjs.org/docs/typechecking-with-proptypes.html)
+
+```JAVASCRIPT
+class Fish extends React.Component {
+
+    // create a static prop type
+    static propTypes = {
+        details: PropTypes.shape({
+            image: PropTypes.string,
+            name: PropTypes.string,
+            desc: PropTypes.string,
+            status: PropTypes.string,
+            price: PropTypes.number
+        }),
+        addToOrder: PropTypes.func,
+    }
+
+    render() {
+        return (
+          // Component here
+        )
+    }
+}
+
+export default Fish;
+```
