@@ -1648,3 +1648,6 @@ class Fish extends React.Component {
 
 export default Fish;
 ```
+
+- TIP: Anytime you write a `this.props` something, you should stop and also write a `propTypes` for it.
+- Wes Jokes: Stop, Drop, and Prop
