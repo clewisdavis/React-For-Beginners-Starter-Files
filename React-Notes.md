@@ -1651,3 +1651,8 @@ export default Fish;
 
 - TIP: Anytime you write a `this.props` something, you should stop and also write a `propTypes` for it.
 - Wes Jokes: Stop, Drop, and Prop
+- Go through the rest of the components and add a `PropTypes` for each.
+
+## Authentication
+
+- Implement authentication, github, twitter, and fb login
