@@ -1656,3 +1656,22 @@ export default Fish;
 ## Authentication
 
 - Implement authentication, github, twitter, and fb login
+- Advanced assumptions knowledge of async/await JS.
+- Use authentication to manage the owner of store.
+
+### Firebase
+
+- Add methods for fb, twitter and github to your firebase settings
+- For each, you are going to need fb, twitter and github API keys for each.
+- In firebase, asked for App ID, App Secret and provides a callback url.
+
+### Set up Facebook
+
+- For fb, go to developers.facebook.com and create a new app.
+- From settings, grab App ID and App Secret. And put in Firebase, sign-in method fields.
+- NOTE: Never put the App Secret out for others to see.
+
+- Enable FB OAuth and add the app config url from Firebase.
+- In TB Login/Settings
+- Enable 'Embedded Browser OAuth Login'
+- Add the OAuth redirect URI from Firebase, to the OAuth Redirect UIR field in the settings.
