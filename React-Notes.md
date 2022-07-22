@@ -1675,3 +1675,55 @@ export default Fish;
 - In TB Login/Settings
 - Enable 'Embedded Browser OAuth Login'
 - Add the OAuth redirect URI from Firebase, to the OAuth Redirect UIR field in the settings.
+
+- Start writing some OAuth handlers
+- Start with the component where the authentication logic is going to live. `<Inventory>`
+
+- Create a new `Login.js` component.
+
+```JAVASCRIPT
+import React from 'react';
+
+const Login = () {
+
+    return (
+        <nav className="login">
+          <h2>Inventory Login</h2>
+        </nav>
+    )
+
+};
+
+export default Login;
+```
+
+- Import the component `<Login>` to display inside the `<Inventory>` component.
+- Create a button for sign in.
+
+```JAVASCRIPT
+import React from 'react';
+import PropTypes from 'prop-types';
+
+const Login = () => {
+
+    return (
+        <nav className="login">
+          <h2>Inventory Login</h2>
+          <p>Sign in to manage your store's inventory.</p>
+          <button 
+            className="facebook"
+            onClick={() => this.props.authenticate("Facebook")}
+           >
+               Log in with Facebook
+           </button>
+        </nav>
+    )
+
+};
+
+Login.propTypes = {
+    authenticate: PropTypes.func.isRequired
+}
+
+export default Login;
+```
