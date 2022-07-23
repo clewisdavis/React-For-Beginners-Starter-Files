@@ -1698,13 +1698,14 @@ export default Login;
 ```
 
 - Import the component `<Login>` to display inside the `<Inventory>` component.
-- Create a button for sign in.
+- Create a button for sign in in your `<Login>` component.
+- Don't forget your propTypes
 
 ```JAVASCRIPT
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Login = () => {
+const Login = (props) => {
 
     return (
         <nav className="login">
@@ -1712,7 +1713,7 @@ const Login = () => {
           <p>Sign in to manage your store's inventory.</p>
           <button 
             className="facebook"
-            onClick={() => this.props.authenticate("Facebook")}
+            onClick={() => props.authenticate("Facebook")}
            >
                Log in with Facebook
            </button>
@@ -1727,3 +1728,34 @@ Login.propTypes = {
 
 export default Login;
 ```
+
+- Create an authenticate method, and pass it down to login.
+- Stateless functional component, to use the props, pass it in via parameter, see above ^
+
+### Create an OAuth provider
+
+- Create an `authProvider` variable to store.
+- And import `firebase` into your component.
+
+```JAVASCRIPT
+    // authenticate method
+    authenticate = (provider) => {
+        // create a new OAuth Provider
+        const authProvider = new firebase.auth();
+    }
+```
+
+- Because you may have multiple login providers, make the provider dynamic, passing it in.
+- Dynamically looking up the function name you are looking for, `[`${provider}authProvider`]`
+
+```JAVASCRIPT
+    // authenticate method
+    authenticate = (provider) => {
+        // create a new OAuth Provider
+        const authProvider = new firebase.auth[`${provider}authProvider`]();
+    }
+```
+
+- Then connect to auth portion of the firebase database
+- `firebaseApp.auth().signInWithPopup(authProvider).then(this.authHandler);`
+- And write a new method called `authHandler`

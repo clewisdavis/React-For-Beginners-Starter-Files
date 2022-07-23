@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Login = () => {
+// stateless functional component
+const Login = (props) => {
 
     return (
         <nav className="login">
@@ -9,7 +10,7 @@ const Login = () => {
           <p>Sign in to manage your store's inventory.</p>
           <button 
             className="facebook"
-            onClick={() => this.props.authenticate("Facebook")}
+            onClick={() => props.authenticate("Facebook")}
            >
                Log in with Facebook
            </button>
