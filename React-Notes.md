@@ -1758,4 +1758,28 @@ export default Login;
 
 - Then connect to auth portion of the firebase database
 - `firebaseApp.auth().signInWithPopup(authProvider).then(this.authHandler);`
-- And write a new method called `authHandler`
+- And write `async` method called `authHandler`.
+
+```JAVASCRIPT
+    // method to handle the auth handler
+    authHandler = async (authData) => {
+        console.log(authData);
+    }
+
+    // authenticate method
+    authenticate = (provider) => {
+        // create a new OAuth Provider
+        const authProvider = new firebase.auth[`${provider}authProvider`]();
+        // connect to auth portion of database
+        firebaseApp.auth().signInWithPopup(authProvider).then(this.authHandler);
+    }
+```
+
+- So far, what have we done.
+- 1, Created a new `authProvider` base on what they want to sign in with. fb, github, twitter
+- 2, Use `firebaseApp.auth().signInWithPopup()` and once someone comes back from that, it runs `.then(this.authHandler)` which will pass the data to the `authHandler` function.
+- 3, Goes to the `authHandler` function, which will provide all the information needed to login.
+
+- Give that a try, and authorize fb when clicking login. Should console.log the payload.
+
+- Take that data and see if the person owns the store.

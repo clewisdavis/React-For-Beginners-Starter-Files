@@ -17,10 +17,18 @@ class Inventory extends React.Component {
         loadSampleFishes: PropTypes.func
     }
 
+    // method to handle the auth handler
+    authHandler = async (authData) => {
+        // 1. Look up the current store in teh firebase database
+        // 2. Claim it if there is no owner
+        // 3. Set the state of the inventory component to reflect the current user
+        console.log(authData);
+    }
+
     // authenticate method
     authenticate = (provider) => {
         // create a new OAuth Provider
-        const authProvider = new firebase.auth[`${provider}authProvider`]();
+        const authProvider = new firebase.auth[`${provider}AuthProvider`]();
         // connect to auth portion of database
         firebaseApp.auth().signInWithPopup(authProvider).then(this.authHandler);
     }
