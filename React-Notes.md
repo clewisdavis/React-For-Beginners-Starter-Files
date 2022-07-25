@@ -1138,9 +1138,9 @@ import firebase from 'firebase';
 // Created your firebase app
 // Firebase configuration, from your project settings
 const firebaseApp = firebase.initializeApp({
-    apiKey: "AIzaSyAOrsbVCy7v6lMkgqSs7bFHeI4udwOqrb0",
-    authDomain: "cdavis-catch-of-the-day-01.firebaseapp.com",
-    databaseURL: "https://cdavis-catch-of-the-day-01-default-rtdb.firebaseio.com"
+    apiKey: "key goes here",
+    authDomain: "authDomain here",
+    databaseURL: "db url here"
 });
 
 // And rebase binding
