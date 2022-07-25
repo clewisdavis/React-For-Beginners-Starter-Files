@@ -5,7 +5,7 @@ import firebase from 'firebase';
 import AddFishForm from './AddFishForm';
 import EditFishForm from './EditFishForm';
 import Login from './Login';
-import { firebaseApp } from "../base";
+import base, { firebaseApp } from "../base";
 
 class Inventory extends React.Component {
     // prop types
@@ -20,9 +20,10 @@ class Inventory extends React.Component {
     // method to handle the auth handler
     authHandler = async (authData) => {
         // 1. Look up the current store in the firebase database
+        const store = await base.fetch(this.props.storeId, { context: this });
+        console.log(store);
         // 2. Claim it if there is no owner
         // 3. Set the state of the inventory component to reflect the current user
-        console.log(authData);
     }
 
     // authenticate method
@@ -33,23 +34,24 @@ class Inventory extends React.Component {
         firebaseApp.auth().signInWithPopup(authProvider).then(this.authHandler);
     }
     render() {
-        return <Login authenticate={this.authenticate} />;
-        // return (
-        //     <div className="inventory">
-        //         <h2>Inventory</h2>
-        //         {Object.keys(this.props.fishes).map(key => (
-        //             <EditFishForm 
-        //                 key={key} 
-        //                 index={key}
-        //                 fish={this.props.fishes[key]}
-        //                 updateFish={this.props.updateFish}
-        //                 deleteFish={this.props.deleteFish}
-        //             />
-        //         ))}
-        //         <AddFishForm addFish={this.props.addFish} />
-        //         <button onClick={this.props.loadSampleFishes}>Load Sample Fishes</button>
-        //     </div>
-        // )
+        // return <Login authenticate={this.authenticate} />;
+        return (
+            <div className="inventory">
+                <h2>Inventory</h2>
+                {Object.keys(this.props.fishes).map(key => (
+                    <EditFishForm 
+                        key={key} 
+                        index={key}
+                        fish={this.props.fishes[key]}
+                        updateFish={this.props.updateFish}
+                        deleteFish={this.props.deleteFish}
+                    />
+                ))}
+                <AddFishForm addFish={this.props.addFish} />
+                <button onClick={this.props.loadSampleFishes}>Load Sample Fishes</button>
+                <Login authenticate={this.authenticate} />
+            </div>
+        )
     }
 }
 

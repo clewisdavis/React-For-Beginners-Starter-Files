@@ -1672,7 +1672,7 @@ export default Fish;
 - NOTE: Never put the App Secret out for others to see.
 
 - Enable FB OAuth and add the app config url from Firebase.
-- In TB Login/Settings
+- In fb Login/Settings
 - Enable 'Embedded Browser OAuth Login'
 - Add the OAuth redirect URI from Firebase, to the OAuth Redirect UIR field in the settings.
 
@@ -1782,4 +1782,12 @@ export default Login;
 
 - Give that a try, and authorize fb when clicking login. Should console.log the payload.
 
-- Take that data and see if the person owns the store.
+- Now, build out the `authHandler` method.
+  1. Look up the current store in the firebase database.
+  2. Claim it if there is not owner
+  3. Set the state of the inventory component to reflect the current user
+
+- Import from `base.js`, the default and named export, `import base, {firebaseApp} from "../base";` into your `<Inventory>` component.
+- Pass down the store Id, comes from `<App>` component.
+- Use `fetch()` with `await` to get the current store from firebase db.
+- `const store = await base.fetch(this.props.storeId, { context: this });`
