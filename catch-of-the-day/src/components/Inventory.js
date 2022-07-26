@@ -22,7 +22,14 @@ class Inventory extends React.Component {
         // 1. Look up the current store in the firebase database
         const store = await base.fetch(this.props.storeId, { context: this });
         console.log(store);
+        console.log(authData);
         // 2. Claim it if there is no owner
+        if (!store.owner) {
+            // save it as our own
+            await base.post(`${this.props.storeId}/owner`, {
+                data: authData.user.uid
+            })
+        }
         // 3. Set the state of the inventory component to reflect the current user
     }
 
@@ -30,6 +37,7 @@ class Inventory extends React.Component {
     authenticate = (provider) => {
         // create a new OAuth Provider
         const authProvider = new firebase.auth[`${provider}AuthProvider`]();
+
         // connect to auth portion of database
         firebaseApp.auth().signInWithPopup(authProvider).then(this.authHandler);
     }

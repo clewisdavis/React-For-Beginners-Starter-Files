@@ -1775,19 +1775,35 @@ export default Login;
     }
 ```
 
-- So far, what have we done.
-- 1, Created a new `authProvider` base on what they want to sign in with. fb, github, twitter
-- 2, Use `firebaseApp.auth().signInWithPopup()` and once someone comes back from that, it runs `.then(this.authHandler)` which will pass the data to the `authHandler` function.
-- 3, Goes to the `authHandler` function, which will provide all the information needed to login.
+### So far, what have we done
+
+- 1. Created a new `authProvider` base on what they want to sign in with. fb, github, twitter
+- 2. Use `firebaseApp.auth().signInWithPopup()` and once someone comes back from that, it runs `.then(this.authHandler)` which will pass the data to the `authHandler` function.
+- 3. Goes to the `authHandler` function, which will provide all the information needed to login.
 
 - Give that a try, and authorize fb when clicking login. Should console.log the payload.
 
-- Now, build out the `authHandler` method.
+### Now, build out the `authHandler` method
+
   1. Look up the current store in the firebase database.
   2. Claim it if there is not owner
   3. Set the state of the inventory component to reflect the current user
 
+- 1. Look up current store in firebase db.
 - Import from `base.js`, the default and named export, `import base, {firebaseApp} from "../base";` into your `<Inventory>` component.
 - Pass down the store Id, comes from `<App>` component.
 - Use `fetch()` with `await` to get the current store from firebase db.
 - `const store = await base.fetch(this.props.storeId, { context: this });`
+
+- 2. Claim if no owner
+
+```JAVASCRIPT
+        if (!store.owner) {
+            // save it as our own
+            await base.post(`${this.props.storeId}/owner`, {
+                data: authData.user.uid
+            })
+        }
+```
+
+- Go to firebase and you will see an owner has now been added.
