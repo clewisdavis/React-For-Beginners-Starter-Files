@@ -1807,3 +1807,143 @@ export default Login;
 ```
 
 - Go to firebase and you will see an owner has now been added.
+
+- 3. Set the state of the inventory component to reflect the current user
+
+```JAVASCRIPT
+this.setState({
+      uid: authData.user.uid,
+      owner: store.owner || authData.user.uid
+  })
+```
+
+- Whenever anyone logs in to a store, figure out who is the current logged in user, `uid: authData.user.uid,`
+- And who is the owner of the store, `owner: store.owner || authData.user.uid`, if they are the same
+- NOTE: When you need data that is just local to that component, you can `setState()` inside of that component. Make sure you set that initial state like did before.
+
+```JAVASCRIPT
+    //set initial state
+    state = {
+        uid: null,
+        owner: null
+    }
+```
+
+- View the `<Inventory>` component in the react dev tools, you should see in state, owner and uid
+
+### Add conditional, for the log in
+
+- 1. Check if they are logged in, and display the right component.
+
+```JAVASCRIPT
+    render() {
+        // 1. make conditional, check if logged in
+        // if there is NO uid, then show login UI
+        if (!this.state.uid) {
+            return <Login authenticate={this.authenticate} />;
+        }
+        return (
+            <div className="inventory">
+                <h2>Inventory</h2>
+                {Object.keys(this.props.fishes).map(key => (
+                    <EditFishForm 
+                        key={key} 
+                        index={key}
+                        fish={this.props.fishes[key]}
+                        updateFish={this.props.updateFish}
+                        deleteFish={this.props.deleteFish}
+                    />
+                ))}
+                <AddFishForm addFish={this.props.addFish} />
+                <button onClick={this.props.loadSampleFishes}>Load Sample Fishes</button>
+            </div>
+        )
+    }
+```
+
+- 2. Check if they are NOT the current owner of store and display message
+
+```JAVASCRIPT
+// 2. Check if they are not the owner fo the store
+        if (this.state.uid !== this.state.owner) {
+            return <div>
+              <p>Sorry, you are not the owner</p>
+            </div>
+        }
+```
+
+- 3. They must be the owner, just render the inventory.
+
+- Then create a logout button, and put in multiple places.
+
+```JAVASCRIPT
+    render() {
+        // make logout button
+        const logout = <button onClick={this.logout}>Log out</button>
+
+
+        // 1. make conditional, check if logged in
+        // if there is NO uid, then show login UI
+        if (!this.state.uid) {
+            return <Login authenticate={this.authenticate} />;
+        }
+
+        // 2. Check if they are not the owner fo the store
+        if (this.state.uid !== this.state.owner) {
+            return <div>
+              <p>Sorry, you are not the owner</p>
+              {logout}
+            </div>
+        }
+
+        // 3. If they are the owner, just render the inventory
+        return (
+            <div className="inventory">
+                <h2>Inventory</h2>
+                {logout}
+                {Object.keys(this.props.fishes).map(key => (
+                    <EditFishForm 
+                        key={key} 
+                        index={key}
+                        fish={this.props.fishes[key]}
+                        updateFish={this.props.updateFish}
+                        deleteFish={this.props.deleteFish}
+                    />
+                ))}
+                <AddFishForm addFish={this.props.addFish} />
+                <button onClick={this.props.loadSampleFishes}>Load Sample Fishes</button>
+            </div>
+        )
+    }
+```
+
+- And create a logout method. Using `await` method
+
+```JAVASCRIPT
+   // logout method
+    logout = async () => {
+        console.log('logging out');
+        await firebase.auth().signOut();
+        this.setState({ uid:null });
+    }
+```
+
+### On refresh, check if logged in
+
+- Listen for component did mount
+
+```JAVASCRIPT
+    componentDidMount() {
+        firebase.auth().onAuthStateChanged(user => {
+           if(user) {
+               this.authHandler({ user });
+           }
+        })
+    }
+```
+
+- What does that do? Everytime we try and load the page, firebase will check if logged in and authenticated. And if true, pass a user, then pass to our `authHandler`.
+
+- Lock down your firebase db, update security rules to what Wes provided in `security-rules.json`.
+
+## Building React for Prod
