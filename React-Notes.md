@@ -1947,3 +1947,75 @@ this.setState({
 - Lock down your firebase db, update security rules to what Wes provided in `security-rules.json`.
 
 ## Building React for Prod
+
+- Hot to build for production and get on hosting services.
+- In your `package.json` you run the `build` script, which runs the `react-scripts build` command.
+- Kill any processes you are running, then in terminal, do `npm run build`
+- This will create a optimized product build
+- Creates a folder called build, and takes all files, css and js and compile it into one tiny js file. Strips out all the warnings and prop types
+- In the build folder, bundles everything up, and creates an `index.html`
+- Includes map files, if you have errors, it will tell you where it's coming from in your source files
+- The production build is almost a static site, will allow you to drag and drop up to the hosting services.
+- However, it still needs to be run into a server, cannot just open it up.
+- So you can figure out the routing.
+
+## Deploying to Now
+
+- Service called Now, from zeit.co/now.
+- Looks like this service is now Vercel, developers of Next.js
+- This part of the tutorial seems deprecated, skipping to the next one.
+
+## Netlify
+
+- Can hook up to your git repo
+- Or the command line
+- You can install their global command line interface.
+- Check if you have it, `netlify --version`
+- To install globally, `npm i netlify-cli -g`
+- First thing, `netlify deploy` and follow the prompts.
+  - Create a new site y/n
+  - Current path to deploy (dir), you want to deploy build directory, `build`
+  - It deploys it and pushes it up
+  - Copy the url and visit it
+  - It didn't need to do an npm install, it just uploaded our files and everything works
+  - However, if you refresh, the url are not being directed correctly.
+  - In your `build` directory, make a new file called `_redirects`, inside that file put `/* /index.html  200`
+  - <https://docs.netlify.com/routing/redirects/rewrites-proxies/#history-pushstate-and-single-page-apps>
+  - Then redeploy the site, make sure you are in the correct directory
+
+## On a Apache server
+
+- On these cheaper services
+- Upload `build` folder into the build client
+- Problem is, when you refresh, you get an error because of the directory path.
+- Make a new file, called `.htaccess` file, because this server is an Apache server.
+- If you are on any other type of server, you need to find out what the equivalent file is.
+- Just Google, your server type + server type and you will find results. Will give you the config that will re-direct everything to that `index.html` page
+- Open your `.htaccess` file and copy in
+
+```code
+RewriteBase /
+RewriteRule ^index\.html$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.html [L]
+```
+
+- This is the case for every deployment, every single time you deploy something, you have to figure out this routing issue. So we are not dependent on folder structure and sending everything to `index.html`. and just using React Router to do our routing.
+
+## Ejecting from create-react-app
+
+- `create-react-app` tucks away all the tooling and does it for you
+- puts all those settings behind defaults called react scripts
+- But if you want something a little custom, and know a little about webpack, how do you do that?
+- How do you customize your eslint, babel etc.
+- If you want to do that, you have to eject the create react app
+- You cannot undo this, so do it in a new branch called `ejected` or whatever you want to call it
+- In the `package.json`, simply run `npm run eject`
+- Then it's going to give us all the dependency files.
+- Now, in your `package.json` it shows all the dependency, not new, it was just tucked away in the `react-scripts` folder.
+- Now you have access to the webpack file config etc., you can edit and more control over how it works.
+- Stay with `create-react-app` as long as you can.
+- Also gives you access to your `eslint` rules if you want to customize.
+
+- That's it folks...
